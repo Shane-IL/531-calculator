@@ -9,5 +9,5 @@ It's just some barebones js, but it does the job.
 
 ### Future goals
 
-- Add lb conversion toggle
+- ~~Add lb conversion toggle~~
 - Support responsive design
