@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    let units = localStorage.getItem('units') || 'metric';
+
     const calcValues = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.5, 0.4];
+
+    const conversionValues = {
+        metric: 0.453592,
+        imperial: 2.20462
+    }
 
     const btnCalc = document.querySelector('.calc-button');
     const spInput = document.querySelector('.sp-input');
@@ -8,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const sqInput = document.querySelector('.sq-input');
 
     const calcTable = document.querySelector('.calc-table');
+    const unitsToggleEl = document.querySelector('.units-toggle');
+
+    const unitsEls = document.querySelectorAll('.units');
 
     const titlesHTML = `
     <div class="title placeholder"></div>
@@ -24,6 +34,19 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="title title-50">50% of base</div>
     <div class="title title-40">40% of base</div>`
 
+    const convertValues = () => {
+        units = units === 'metric' ? 'imperial' : 'metric';
+        unitsToggleEl.innerText = units;
+        localStorage.setItem('units', units);
+        unitsEls.forEach(unitEl => unitEl.innerText = units === 'metric' ? 'kg' : 'lb');
+        spInput.value = round(spInput.value * conversionValues[units], 2);
+        dlInput.value = round(dlInput.value * conversionValues[units], 2);
+        bpInput.value = round(bpInput.value * conversionValues[units], 2);
+        sqInput.value = round(sqInput.value * conversionValues[units], 2);
+        calculateTable();
+    
+    }
+
     const calculateAndAppend = (table, value, title, classIdentifier) => {
         const base = value*0.9;
         const titleEl = document.createElement('div');
@@ -38,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const baseEl = document.createElement('div');
         baseEl.className = `value ${classIdentifier}-base`;
-        baseEl.innerText = round(base);
+        baseEl.innerText = round(base, 2);
         table.appendChild(baseEl);
 
         calcValues.forEach(calcValue => {
@@ -55,12 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return Number(num + "e" + -decimalPlaces);
     }
 
-    spInput.value = localStorage.getItem('sp1RM') || null;
-    dlInput.value = localStorage.getItem('dl1RM') || null;
-    bpInput.value = localStorage.getItem('bp1RM') || null;
-    sqInput.value = localStorage.getItem('sq1RM') || null;
-
-    btnCalc.addEventListener('click', e => {
+    function calculateTable(firstRun) {
         const sp1RM = spInput.value;
         const dl1RM = dlInput.value;
         const bp1RM = bpInput.value;
@@ -80,7 +98,22 @@ document.addEventListener('DOMContentLoaded', () => {
             calculateAndAppend(calcTable, sq1RM, "Barbell Back Squat", "sq");
 
         } else {
-            alert("missing values")
+            firstRun ? console.error("missing values") : alert("missing values");
         }
-    })
+    }
+
+    spInput.value = localStorage.getItem('sp1RM') || null;
+    dlInput.value = localStorage.getItem('dl1RM') || null;
+    bpInput.value = localStorage.getItem('bp1RM') || null;
+    sqInput.value = localStorage.getItem('sq1RM') || null;
+
+    unitsToggleEl.addEventListener('click', convertValues);
+
+    btnCalc.addEventListener('click', e=>calculateTable(false));
+
+    unitsToggleEl.innerText = units;
+    unitsEls.forEach(unitEl => unitEl.innerText = units === 'metric' ? 'kg' : 'lb');
+
+    calculateTable(true);
+
 });

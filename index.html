@@ -17,23 +17,28 @@
 
 <body>
     <div class="content-wrapper">
-        <h2>Add 1rm values in kg</h2>
+        <div class="units-toggle-container">Measurement System: <button class="units-toggle">Metric</button></div>
+        <h2>Add 1rm values in <span class="units">kg</span></h2>
         <div class="value-inputs">
             <div class="value-input">
                 <div class="input-title">Standing Shoulder Press</div>
                 <input placeholder="Shoulder Press 1RM" class="sp-input" type="number" />
+                <div class="value-input-units units">kg</div>
             </div>
             <div class="value-input">
                 <div class="input-title">Deadlift</div>
                 <input placeholder="Deadlift 1RM" class="dl-input" type="number" />
+                <div class="value-input-units units">kg</div>
             </div>
             <div class="value-input">
                 <div class="input-title">Bench Press</div>
                 <input placeholder="Bench Press 1RM" class="bp-input" type="number" />
+                <div class="value-input-units units">kg</div>
             </div>
             <div class="value-input">
                 <div class="input-title">Barbell Back Squat</div>
                 <input placeholder="Squat 1RM" class="sq-input" type="number" />
+                <div class="value-input-units units">kg</div>
             </div>
         </div>
         <button class="calc-button">Calculate</button>
