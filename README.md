@@ -6,3 +6,8 @@ I've been doing Jim Wendler's 5/3/1 program (https://www.t-nation.com/workouts/5
 I got a bit tired of doing all the calculations so I made this little util to do it for me. 
 
 It's just some barebones js, but it does the job. 
+
+### Future goals
+
+- Add lb conversion toggle
+- Support responsive design
